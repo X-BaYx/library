@@ -86,12 +86,7 @@
 	
 </head>
 <body>
-<?php
-session_start();
-if(!isset($_SESSION['username'])){
 
-	}
-?>
      <!-- Preloader start-->
 	 <div id="preloader">
 		<div class="lds-ripple">
@@ -105,7 +100,7 @@ if(!isset($_SESSION['username'])){
 
         <!-- Nav header start-->
 		<div class="nav-header">
-            <a href="dashboard.php" class="brand-logo">
+            <a href="/dashboard" class="brand-logo">
 				<img src="public/img/e logo1.png" width="55" height="55" viewbox="0 0 55 55" fill="none" alt="elibrary logo">
 				<div class="brand-title">
 					<h2 class="" style="color: #0b0a0b">elibrary</h2>
@@ -132,7 +127,7 @@ if(!isset($_SESSION['username'])){
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
 							<div class="dashboard_bar">
-                              Borrowed Books 
+                              Borrowed Books
                             </div>
 							
                         </div>
@@ -146,7 +141,7 @@ if(!isset($_SESSION['username'])){
 							
 							<li class="nav-item dropdown  header-profile">
 								<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-									<img src="public/img/profile-logo.png" width="56" alt="">
+									<img src="/img/profile-logo.png" width="56" alt="">
 								</a>
 							</li>
                         </ul>
@@ -157,45 +152,45 @@ if(!isset($_SESSION['username'])){
 
 
        <!--  Sidebar start -->
-	 <div class="dlabnav">
-            <div class="dlabnav-scroll">
-				<ul class="metismenu" id="menu">
-                    <li>
-						<a class="" href="dashboard.php" aria-expanded="false">
-							<i class="fas fa-home"></i>
-							<span class="nav-text">Dashboard</span>
-						</a>
-                    </li>
-					   
+	   <div class="dlabnav">
+		<div class="dlabnav-scroll">
+			<ul class="metismenu" id="menu">
 				<li>
-					<a class="" href="bookstore.php" aria-expanded="false">
-					<i class="fas fa-book"></i>
-						<span class="nav-text">Explore Books</span>
+					<a class="" href="/dashboard" aria-expanded="false">
+						<i class="fas fa-home"></i>
+						<span class="nav-text">Dashboard</span>
 					</a>
-				</li> 
-				<li>
-					<a class="has-arrow " href="javascript:void()" aria-expanded="false">
-					<i class="fas fa-database"></i>
-						<span class="nav-text">Loan Management</span>
-					</a>
-					<ul aria-expanded="false">
-						<li><a href="borrowed-db.php">Borrowed Books</a></li>
-						<li><a href="return.php">Returned Books</a></li>
-						
-					</ul>
-				</li> 
+				</li>
+				   
+			<li>
+				<a class="" href="/dashboard/bookstore" aria-expanded="false">
+				<i class="fas fa-book"></i>
+					<span class="nav-text">Explore Books</span>
+				</a>
+			</li> 
+			<li>
+				<a class="has-arrow " href="javascript:void()" aria-expanded="false">
+				<i class="fas fa-database"></i>
+					<span class="nav-text">Loan Management</span>
+				</a>
+				<ul aria-expanded="false">
+					<li><a href="/dashboard/mylibrary_b">Borrowed Books</a></li>
+					<li><a href="/dashboard/mylibrary_r">Returned Books</a></li>
 					
-                    <li>
-						<a class="" href="logout.php" aria-expanded="false">
-						<i class="fa-solid fa-arrow-right-from-bracket"></i>
-							<span class="nav-text">Logout</span>
-						</a>
-                    </li>   
-                </ul>
+				</ul>
+			</li> 
 				
-				
-			</div>
-        </div>
+				<li>
+					<a class="" href="/" aria-expanded="false">
+					<i class="fa-solid fa-arrow-right-from-bracket"></i>
+						<span class="nav-text">Logout</span>
+					</a>
+				</li>   
+			</ul>
+			
+			
+		</div>
+	</div>
 	<!-- Sidebar end -->
 		
 		<!--  Content body start -->
@@ -204,65 +199,54 @@ if(!isset($_SESSION['username'])){
             <!-- row -->
 			<div class="container-fluid">
 			<div class="d-flex justify-content-between align-items-center flex-wrap">
-			
+					<div class="input-group contacts-search mb-4">
+						<!-- Dropdown for Filter Type -->
+						<select class="form-select" id="filterType" style="max-width: 150px;">
+							<option value="title">Title</option>
+							<option value="author">Author</option>
+							<option value="genre">Genre</option>
+						</select>
+						<!-- Search Input -->
+						<input type="text" class="form-control" id="searchInput" placeholder="Search here...">
+						<!-- Search Button -->
+						<span class="input-group-text">
+							<a href="javascript:void(0)" id="searchButton">
+								<i class="flaticon-381-search-2"></i>
+							</a>
+						</span>
+					</div>
 				</div>
 				</div>
 
 				<!-- displaying of books -->
 				
-			<div class="row">
-					     <?php
-require('db.php');
-$username = $_SESSION['username'];
-$myaccount = "SELECT * FROM users WHERE username = '$username'";
-$result22 = $conn->query($myaccount);
-$row5 = $result22->fetch_assoc();
-$user = $row5['id'];
-
-$view = "SELECT * FROM borrowed WHERE user = '$user' AND status = 'Borrowed'";
-$result = $conn->query($view);
-if($result->num_rows > 0){
-while($row = $result->fetch_array()){?>
+				<div class="row">
 					<div class="col-xl-2 col-xxl-3 col-lg-3 col-md-4 col-sm-6 items">
 						<div class="card contact-bx item-content">
 						  <div class="card-body user-profile">
 							<div class="new-arrival-product">
 							  <div class="new-arrivals-img-contnent">
-								<img class="img-fluid" src="admin/<?php echo $row['bookfile']; ?>" alt="Book Cover">
+								<img class="img-fluid" src="/img/books/book1.jpg" alt="Book Cover">
 							  </div>
 							  <div class="new-arrival-content text-center mt-3">
-								<h4><a><?php echo $row['title']; ?></a></h4>
-								<p class="author" style="display:">Author Name</p>
-								<p class="genre" style="display: none;">Fiction</p>
+								<h4><a>Bonorum et Malorum</a></h4>
+								<p class="due-date">Due Date: <span>2023-12-15</span></p>
+								<div class="book-description">
+								  <p>This is a classic book on ethics and morality, written by Cicero.</p>
+								  <div class="book-actions">
+									<button class="btn btn-icon" title="View Book">
+									  <i class="fas fa-eye"></i>
+									</button>
+									<button class="btn btn-icon" title="Return Book">
+									  <i class="fas fa-undo"></i>
+									</button>
+								  </div>
+								</div>
 							  </div>
-							</div>
-							<!-- Hover Overlay -->
-							<div class="hover-overlay">
-							 <p class="" style="">Borrowed on:<?php echo $row['date']; ?> </p>
-							  <a class="borrow-btn" href="returnProcess.php?id=<?php echo md5($row['id']);?>">Return Book</a>
 							</div>
 						  </div>
 						</div>
-					</div>
-
-									   <?php
-					
-							}
-
-						}else{
-							echo " <div class='alert alert-success alert-dismissible'>
-	       <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                     
-             No  record found
-                    </div>";
-						}
-					
-				$conn->close();
-				?>
-
-				
-
-			
+					  </div>
 				</div>
 
 			</div>
@@ -295,7 +279,7 @@ while($row = $result->fetch_array()){?>
 	<script src="public/js/dashboard.js"></script>
     <script src="public/js/custom.min.js"></script>
 	<script src="public/js/dlabnav-init.js"></script>
-	<script src="public/js/demo.js"></script>
+	<script src="publi/js/demo.js"></script>
 
 	<script>
 		// Initialize metismenu

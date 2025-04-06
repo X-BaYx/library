@@ -121,7 +121,6 @@ form.sign-up-form {
 /* carousel style */
 
 .carousel-item {
-  height: 500px; /* Adjust height as needed */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -378,10 +377,6 @@ main.sign-up-mode .carousel {
 .genre {
     display: none; /* Hide from UI */
 }
-
-
-
-
 
 
 
